@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>메모</title>
+    <script defer src="/assets/scripts/index.js"></script>
+</head>
+<body>
+<form method="post" id="form">
+    <h1>메모</h1>
+    <label>
+        <span>작성자</span>
+        <input required maxlength="10" minlength="2" name="writer" type="text">
+    </label>
+    <label>
+        <span>내용</span>
+        <input required maxlength="100" minlength="1" name="content" type="text">
+    </label>
+    <button type="submit">작성하기</button>
+</form>
+<table border="1" th:style="'margin-top: 1rem'">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="memo : ${memos}">
+        <th th:text="${memo.getIndex()}"></th>
+        <td th:text="${memo.getWriter()}"></td>
+        <td th:text="${memo.getContent()}"></td>
+        <td th:text="${#temporals.format(memo.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <a th:if="${page > 0}"
+               th:each="page : ${#numbers.sequence(pages.movableMinPage, pages.movableMaxPage)}"
+               th:href="@{'/memo/' (index = ${page})}"
+               th:text="${page}"
+            th:style="'margin-right: 0.2rem'"></a>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>
