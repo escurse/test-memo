@@ -45,7 +45,7 @@
                th:each="page : ${#numbers.sequence(pages.movableMinPage, pages.movableMaxPage)}"
                th:href="@{'/memo/' (index = ${page})}"
                th:text="${page}"
-            th:style="'margin-right: 0.2rem'"></a>
+               th:style="'margin-right: 0.2rem'"></a>
         </td>
     </tr>
     </tfoot>
