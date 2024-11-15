@@ -36,6 +36,7 @@ public class MemoController {
     public String postIndex(MemoEntity memoEntity) {
         JSONObject response = new JSONObject();
         WriteResult writeResult = this.memoService.write(memoEntity);
+        response.put("result", writeResult.toString().toLowerCase());
         return response.toString();
     }
 }

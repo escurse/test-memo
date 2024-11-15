@@ -22,6 +22,7 @@ $form.onsubmit = (e) => {
             $div.innerText = "메모 작성에 실패하였습니다."
             $div.style.color = "red";
         }
+        console.log(response['result']);
         $form.append($div);
         $form['writer'].value = "";
         $form['content'].value = "";
