@@ -24,11 +24,20 @@ public class MemoService {
         return Pair.of(this.memoMapper.selectMemosByIndex(index, memoVo.countPerPage, memoVo.offsetCount), memoVo);
     }
 
+    public Pair<MemoEntity[], MemoVo> search(int index, String search) {
+        if (search == null || search.isEmpty() || search.length() > 50) {
+            return null;
+        }
+        int totalCount = this.memoMapper.selectMemoCountBySearch(search);
+        MemoVo memoVo = new MemoVo(index, totalCount);
+        return Pair.of(this.memoMapper.selectMemoBySearch(search, memoVo.countPerPage, memoVo.offsetCount), memoVo);
+    }
+
     public WriteResult write(MemoEntity memo) {
         if (memo == null ||
-            memo.getIndex() < 0 ||
-            memo.getWriter() == null || memo.getWriter().length() < 2 || memo.getWriter().length() > 10 ||
-            memo.getContent() == null || memo.getContent().isEmpty() || memo.getContent().length() > 100) {
+                memo.getIndex() < 0 ||
+                memo.getWriter() == null || memo.getWriter().length() < 2 || memo.getWriter().length() > 10 ||
+                memo.getContent() == null || memo.getContent().isEmpty() || memo.getContent().length() > 100) {
             return WriteResult.FAILURE;
         }
         memo.setCreatedAt(LocalDateTime.now());

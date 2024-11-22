@@ -1,6 +1,8 @@
 package com.escass.testmemo.results.memo;
 
-public enum WriteResult {
+import com.escass.testmemo.results.Result;
+
+public enum WriteResult implements Result {
     FAILURE,
     SUCCESS
 }

@@ -16,6 +16,7 @@
                `created_at` AS `createdAt`,
                `is_deleted` AS `isDeleted`
         FROM `test0404`.`memos`
+        WHERE `is_deleted` = FALSE
         ORDER BY `index` DESC
         LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
@@ -23,5 +24,26 @@
             resultType="_int">
         SELECT COUNT(0)
         FROM `test0404`.`memos`
+        WHERE `is_deleted` = FALSE
+    </select>
+    <select id="selectMemoCountBySearch" resultType="_int">
+        SELECT COUNT(0)
+        FROM `test0404`.`memos`
+        WHERE `is_deleted` = FALSE
+        AND (`writer` LIKE CONCAT('%', #{search}, '%')
+        OR `content` LIKE CONCAT('%', #{search}, '%'))
+    </select>
+    <select id="selectMemoBySearch" resultType="com.escass.testmemo.entities.MemoEntity">
+        SELECT `index`      AS `index`,
+               `writer`     AS `writer`,
+               `content`    AS `content`,
+               `created_at` AS `createdAt`,
+               `is_deleted` AS `isDeleted`
+        FROM `test0404`.`memos`
+        WHERE `is_deleted` = FALSE
+        AND (`writer` LIKE CONCAT('%', #{search}, '%')
+        OR `content` LIKE CONCAT('%', #{search}, '%'))
+        ORDER BY `index` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
 </mapper>

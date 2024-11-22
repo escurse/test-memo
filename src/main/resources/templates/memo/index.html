@@ -13,7 +13,7 @@
     <h1>메모</h1>
     <label>
         <span>작성자</span>
-        <input required maxlength="10" minlength="2" name="writer" type="text">
+        <input autofocus required maxlength="10" minlength="2" name="writer" type="text">
     </label>
     <label>
         <span>내용</span>
@@ -39,16 +39,30 @@
     </tr>
     </tbody>
     <tfoot>
+    <tr th:if="${memos == null || memos.length == 0}">
+        <td colspan="4" th:text="'검색 결과가 없습니다.'"></td>
+    </tr>
     <tr>
         <td colspan="4">
-            <a th:if="${page > 0}"
+            <a th:if="${page > 0 && search == null}"
                th:each="page : ${#numbers.sequence(pages.movableMinPage, pages.movableMaxPage)}"
                th:href="@{'/memo/' (index = ${page})}"
+               th:text="${page}"
+               th:style="'margin-right: 0.2rem'"></a>
+            <a th:if="${page > 0 && search != null}"
+               th:each="page : ${#numbers.sequence(pages.movableMinPage, pages.movableMaxPage)}"
+               th:href="@{'/memo/' (index = ${page}, search = ${search})}"
                th:text="${page}"
                th:style="'margin-right: 0.2rem'"></a>
         </td>
     </tr>
     </tfoot>
 </table>
+<form id="select-form">
+    <label>
+        <input maxlength="50" minlength="0" type="text" placeholder="검색" name="search" th:value="${search}">
+    </label>
+    <button type="submit">검색</button>
+</form>
 </body>
 </html>

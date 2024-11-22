@@ -13,4 +13,10 @@ public interface MemoMapper {
     MemoEntity[] selectMemosByIndex(@Param("index") int index,
                                     @Param("limitCount") int limitCount,
                                     @Param("offsetCount") int offsetCount);
+
+    int selectMemoCountBySearch(@Param("search") String search);
+
+    MemoEntity[] selectMemoBySearch(@Param("search") String search,
+                                  @Param("limitCount") int limitCount,
+                                  @Param("offsetCount") int offsetCount);
 }
